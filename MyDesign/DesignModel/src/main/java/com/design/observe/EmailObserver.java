@@ -4,27 +4,24 @@ package com.design.observe;
  * @author yuanyuan
  * @version V1.0
  * @date 2023/5/2 0:41
- * @Description null
+ * @Description 取消订单
  */
 
+import com.design.pojo.Order;
 import com.design.singleTon.ThreadPool;
 
-/**
- * 订单观察者
- * @param <E>
- */
-public class OrderObserver<E> extends Observer<E> {
+public class EmailObserver implements Observer{
     @Override
-    void handEvent(E event){
+    public void handEvent(Order event){
         ThreadPool.getThreadPool().executor(new Runnable() {
             @Override
             public void run() {
-                saveOrder(event);
+                sendEmail(event);
             }
         });
     }
 
-    void saveOrder(E message){
-        System.out.println("取消订单");
+    public void sendEmail(Order message){
+        System.out.println("发送邮件");
     }
 }

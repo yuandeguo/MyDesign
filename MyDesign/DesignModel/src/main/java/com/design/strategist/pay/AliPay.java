@@ -8,7 +8,7 @@ package com.design.strategist.pay;
  */
 public class AliPay implements Payment {
     @Override
-    public boolean pay(String orderId, Long amount) {
+    public boolean pay(Integer orderId, Integer amount) {
         System.out.printf("--%s--", "支付宝 支付");
         return true;
     }

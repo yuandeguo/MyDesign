@@ -8,7 +8,7 @@ package com.design.strategist.pay;
  */
 public class WeChatPay implements Payment {
     @Override
-    public boolean pay(String orderId, Long amount) {
+    public boolean pay(Integer orderId, Integer amount) {
         System.out.printf("--%s--", "微信 支付");
         return true;
     }

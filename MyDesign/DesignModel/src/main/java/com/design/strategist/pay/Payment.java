@@ -7,5 +7,5 @@ package com.design.strategist.pay;
  * @Description null
  */
 public interface Payment {
-    boolean pay(String orderId, Long amount);
+    boolean pay(Integer orderId, Integer amount);
 }

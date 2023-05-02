@@ -1,5 +1,6 @@
 package com.design.observe;
 
+import com.design.pojo.Order;
 import com.design.utiles.R;
 
 
@@ -7,13 +8,13 @@ import com.design.utiles.R;
  * @author yuanyuan
  * @version V1.0
  * @date 2023/5/2 0:36
- * @Description null
+ * @Description 主题接口
  */
-public abstract class Subject<E> {
+public  interface Subject {
     //订阅
-    abstract R subscribe(Observer<E> orderObserver);
+     R subscribe(Observer orderObserver);
     //取消订阅
-    abstract R unsubscribe(Observer<E>  orderObserver);
+     R unsubscribe(Observer  orderObserver);
     //通知
-    abstract void notify(E event);
+     void notify(Order event);
 }
