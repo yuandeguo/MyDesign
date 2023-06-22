@@ -1,6 +1,8 @@
 package com.design.singleTon;
 
+import javax.validation.groups.Default;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -10,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/5/1 23:01
  * @Description 单例线程池
  */
-public class ThreadPool {
+public class ThreadPool extends ThreadPoolExecutor{
     /**
      * // 构造一个任务池
      * 参数说明：
@@ -22,25 +24,9 @@ public class ThreadPool {
      * threadFactory - 执行程序创建新线程时使用的工厂。
      * handler - 由于超出线程范围和队列容量而使执行被阻塞时所使用的处理程序
      */
-    private ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 3, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
-    private static ThreadPool instance = null;
-
+    private static volatile ThreadPool instance = null;
     private ThreadPool(){
-    }
-
-    /**
-     * 使用线程执行任务
-     * @param runnable
-     */
-    public void executor(Runnable runnable) {
-        executor.execute(runnable);
-    }
-
-    /**
-     * 关闭线程池
-     */
-    public void shutdown() {
-        executor.shutdown();
+        super(2, 3, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5), Executors.defaultThreadFactory(),  new AbortPolicy());
     }
 
     /**

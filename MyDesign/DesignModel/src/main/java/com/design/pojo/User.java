@@ -19,8 +19,8 @@ import java.io.Serializable;
 public class User implements Serializable {
     public static final Long serialVersionUID = 1L;
 
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer userId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     @TableField("user_name")
     private String  userName;
 

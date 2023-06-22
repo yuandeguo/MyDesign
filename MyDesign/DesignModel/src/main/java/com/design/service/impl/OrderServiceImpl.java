@@ -1,18 +1,17 @@
 package com.design.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.design.factory.DisCountFactory;
-import com.design.factory.PayStrategyFactory;
-import com.design.mapper.CartMapper;
+
 import com.design.mapper.OrderMapper;
-import com.design.pojo.Cart;
 import com.design.pojo.Order;
-import com.design.service.CartService;
 import com.design.service.OrderService;
 import com.design.service.RedisService;
-import com.design.strategist.count.Discount;
-import com.design.strategist.pay.Payment;
-import org.aspectj.weaver.ast.Or;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 
@@ -27,21 +26,29 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private OrderMapper orderMapper;
     @Resource
     private RedisService redisService;
-
+    @Autowired
+    private TransactionTemplate transactionTemplate;
     @Override
     public void createOrder(Order order) {
-        try {
-            Discount discount = DisCountFactory.getDiscount(order.getDiscount());
-            Integer money = discount.getMoney(order.getProductPrice());
-            Payment payment = PayStrategyFactory.getPayment(order.getPayType().toString());
-            payment.pay(order.getId(),money);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Boolean status = transactionTemplate.execute((t) -> {
+            Object savepoint = t.createSavepoint();
+            try {
+                return true;
+            }
+            catch (Exception e){
+                t.rollbackToSavepoint(savepoint);
+                e.printStackTrace();
+                return false;
+            }
+        });
+
+
     }
 
     @Override
     public void cancelOrder(Order order) {
+
+
 
     }
 }

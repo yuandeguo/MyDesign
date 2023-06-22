@@ -12,9 +12,10 @@ import com.design.utiles.R;
  */
 public  interface Subject {
     //订阅
-     R subscribe(Observer orderObserver);
+    void registerObserver(Observer observer);
+
     //取消订阅
-     R unsubscribe(Observer  orderObserver);
+    void removeObserver(Observer observer);
     //通知
-     void notify(Order event);
+    void notifyObservers(Integer status);
 }

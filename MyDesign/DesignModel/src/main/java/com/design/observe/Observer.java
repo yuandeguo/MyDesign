@@ -9,5 +9,5 @@ import com.design.pojo.Order;
  * @Description 观察者接口
  */
 public  interface Observer {
-     void handEvent(Order event);
+     void update(Integer status);
 }

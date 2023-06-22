@@ -5,14 +5,15 @@ import com.design.pojo.Order;
 /**
  * @author yuanyuan
  * @version V1.0
- * @date 2023/5/2 11:12
+ * @date 2023/6/22 22:49
  * @Description null
  */
-public abstract class OrderHandler {
-    protected OrderHandler successor;
+abstract  class OrderHandler {
+    protected OrderHandler nextHandler;
 
-    public void setSuccessor(OrderHandler successor) {
-        this.successor = successor;
+    public void setNextHandler(OrderHandler nextHandler) {
+        this.nextHandler = nextHandler;
     }
-    public abstract boolean handle(Order order);
+
+    public abstract void handleOrder(Order order);
 }
